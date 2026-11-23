@@ -1,18 +1,26 @@
-#include <Arduino.h>
+#include <Arduino.h> 
 
-// put function declarations here:
-int myFunction(int, int);
+#define LED_OUTPUT 23
+#define BUTTON_INPUT 22
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-}
+bool ledState = true;
+    int lastButtonState = LOW;
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
+void setup() { 
+
+    pinMode(LED_OUTPUT, OUTPUT);
+    pinMode(BUTTON_INPUT, INPUT_PULLDOWN);
+    digitalWrite(LED_OUTPUT, HIGH);
+} 
+void loop() { 
+        int buttonState = digitalRead(BUTTON_INPUT);
+
+    if (buttonState == HIGH && lastButtonState == LOW) {
+        ledState = !ledState;
+        digitalWrite(LED_OUTPUT, ledState);
+        delay(200);
+    }
+    lastButtonState = buttonState;
+
+} 
